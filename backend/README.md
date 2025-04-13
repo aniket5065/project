@@ -43,3 +43,24 @@ The endpoint returns a JSON payload with the following structure:
   }
 }
 ```
+
+## POST /users/login
+
+This endpoint authenticates an existing user.
+
+### Description
+- **Endpoint:** `/users/login`
+- **Method:** POST
+- **Purpose:** Authenticates a user and returns a JWT token if the credentials are valid.
+- **Validation:**
+  - `email` must be a valid email address.
+  - `password` must be at least 6 characters long.
+
+### Request Body
+The endpoint expects a JSON payload with the following structure:
+
+```json
+{
+    "email": "john.doe@example.com",
+    "password": "yourPassword"
+}
