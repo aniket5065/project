@@ -64,3 +64,63 @@ The endpoint expects a JSON payload with the following structure:
     "email": "john.doe@example.com",
     "password": "yourPassword"
 }
+```
+
+## GET /users/profile
+
+This endpoint retrieves the profile of the authenticated user.
+
+### Description
+- **Endpoint:** `/users/profile`
+- **Method:** GET
+- **Purpose:** Returns the profile object for the current authenticated user.
+- **Authentication:** Requires a valid JWT token provided either in the `Authorization` header in the format `Bearer <token>` or via a cookie named `token`.
+
+### Request Headers
+Example using Authorization header:
+
+### Response Body
+On success, returns JSON containing the user profile:
+
+```json
+{
+  "user": {
+    "_id": "6426c2f17aee0b2c7c0c8e9b",
+    "fullname": {
+      "firstname": "John",
+      "lastname": "Doe"
+    },
+    "email": "john.doe@example.com"
+  }
+}
+```
+
+## GET /users/logout
+
+This endpoint logs out the authenticated user.
+
+### Description
+- **Endpoint:** `/users/logout`
+- **Method:** GET
+- **Purpose:** Logs the user out by clearing the authentication cookie and blacklisting the current token.
+- **Authentication:** Requires a valid JWT token provided in the `Authorization` header or via a `token` cookie.
+
+### How It Works
+- The endpoint clears the `token` cookie.
+- The current token is added to a blacklist, preventing its further use.
+
+### Request Headers
+Example:
+
+### Response Body
+On success, returns a JSON message confirming logout.
+
+### Success Response Example
+- **Status Code:** 200 OK
+
+```json
+{
+  "message": "Logged out"
+}
+```
+````markdown

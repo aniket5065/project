@@ -25,10 +25,28 @@ userController.loginUser);
 
 router.get('/profile',authmiddleware.authUser, userController.getUserProfile)
 
-router.get('/logout', authmiddleware.authUser, userController.logoutUser)
+router.get('/logout', authmiddleware.authUser, (req, res) => {
+    userController.logoutUser(req, res);
+    res.status(200).json({ message: "Logged out" });
+});
 
+router.get('/users/profile', authmiddleware.authUser, userController.getUserProfile);
 
-
-
+router.get('/users/logout', authmiddleware.authUser, (req, res) => {
+    userController.logoutUser(req, res);
+    res.status(200).json({ message: "Logged out" });
+});
 
 module.exports = router;
+
+// Example user data
+const exampleUser = {
+  "user": {
+    "_id": "6426c2f17aee0b2c7c0c8e9b",
+    "fullname": {
+      "firstname": "John",
+      "lastname": "Doe"
+    },
+    "email": "john.doe@example.com"
+  }
+};
