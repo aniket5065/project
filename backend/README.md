@@ -123,4 +123,80 @@ On success, returns a JSON message confirming logout.
   "message": "Logged out"
 }
 ```
-````markdown
+
+# API Documentation - Captain Endpoints
+
+## POST /captains/register
+
+This endpoint registers a new captain into the application.
+
+### Description
+- **Endpoint:** `/captains/register`
+- **Method:** POST
+- **Purpose:** Creates a new captain with the provided details.
+- **Validation:**
+  - `fullname.firstname` must be at least 3 characters long.
+  - `fullname.lastname` must be at least 3 characters long.
+  - `email` must be a valid email address.
+  - `password` must be at least 6 characters long.
+  - `vehicle.color` must be at least 3 characters long.
+  - `vehicle.plate` must be at least 3 characters long.
+  - `vehicle.capacity` must be a number.
+  - `vehicle.vehicleType` must be one of the following: `car`, `motorcycle`, or `auto`.
+
+### Request Body
+The endpoint expects a JSON payload with the following structure:
+
+```json
+{
+  "fullname": {
+    "firstname": "John",
+    "lastname": "Doe"
+  },
+  "email": "john.doe@example.com",
+  "password": "yourPassword",
+  "vehicle": {
+    "color": "red",
+    "plate": "mp 04 xy 6504",
+    "capacity": 3,
+    "vehicleType": "car"
+  }
+}
+```
+
+### Response Body
+The endpoint returns a JSON payload with the following structure:
+
+```json
+{
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+  "captain": {
+    "_id": "6426c2f17aee0b2c7c0c8e9b",
+    "fullname": {
+      "firstname": "John",
+      "lastname": "Doe"
+    },
+    "email": "john.doe@example.com",
+    "vehicle": {
+      "color": "red",
+      "plate": "mp 04 xy 6504",
+      "capacity": 3,
+      "vehicleType": "car"
+    },
+    "status": "inactive",
+    "location": {
+      "lat": null,
+      "lng": null
+    }
+  }
+}
+```
+
+### Error Response Example
+- **Status Code:** 409 Conflict
+
+```json
+{
+  "message": "Captain already exists"
+}
+```
