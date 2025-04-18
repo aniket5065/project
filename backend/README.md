@@ -79,6 +79,10 @@ This endpoint retrieves the profile of the authenticated user.
 ### Request Headers
 Example using Authorization header:
 
+```plaintext
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+```
+
 ### Response Body
 On success, returns JSON containing the user profile:
 
@@ -112,6 +116,10 @@ This endpoint logs out the authenticated user.
 ### Request Headers
 Example:
 
+```plaintext
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+```
+
 ### Response Body
 On success, returns a JSON message confirming logout.
 
@@ -120,7 +128,7 @@ On success, returns a JSON message confirming logout.
 
 ```json
 {
-  "message": "Logged out"
+  "message": "Logged out successfully"
 }
 ```
 
