@@ -14,9 +14,9 @@ const CaptainLogin = () =>{
         
     
     
-        const submithandler = async (e)=>{
-        e.preventDefault();
-        const captain =  {
+            const submithandler = async (e)=>{
+            e.preventDefault();
+            const captain =  {
             email: email,
             password: password
             }

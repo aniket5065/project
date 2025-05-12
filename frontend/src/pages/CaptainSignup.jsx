@@ -11,8 +11,8 @@ const CaptainSignup = () =>{
     
         const [email, setEmail] = useState('')
         const [password, setPassword] = useState('')
-        const [firstname, setFirstName] = useState('')
-        const [lastname, setLastName] = useState('')
+        const [firstName, setFirstName] = useState('')
+        const [lastName, setLastName] = useState('')
         const [captainData, setCaptainData] = useState({})
 
 
@@ -30,8 +30,8 @@ const CaptainSignup = () =>{
             e.preventDefault()
             const CaptainData = {
                 fullname:{
-                    firstname:firstname,
-                    lastname:lastname
+                    firstname:firstName,
+                    lastname:lastName
                 },
                 email: email,
                 password: password,
@@ -43,7 +43,7 @@ const CaptainSignup = () =>{
                 }
             }
             console.log("Sending CaptainData:", JSON.stringify(CaptainData, null, 2));
-            const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/captains/register`, CaptainData)
+            const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/captains/register`, captainData)
             console.log("Response:", response.data);
             if(response.status === 201){
                 const data = response.data
@@ -83,7 +83,7 @@ const CaptainSignup = () =>{
                       className="bg-[#eeeeee] w-1/2  rounded px-4 py-2 border  text-lg placeholder: text-base"
                       type="text" 
                       placeholder="Enter Firstname" 
-                      value={firstname}
+                      value={firstName}
                       onChange={(e)=>{
                          setFirstName(e.target.value)
                       }}
@@ -93,7 +93,7 @@ const CaptainSignup = () =>{
                       className="bg-[#eeeeee] w-1/2  rounded px-4 py-2 border  text-lg placeholder: text-base"
                       type="text" 
                       placeholder="Enter Lastname" 
-                      value={lastname}
+                      value={lastName}
                       onChange={(e)=>{
                          setLastName(e.target.value)
                       }}
@@ -170,7 +170,7 @@ const CaptainSignup = () =>{
                  className="bg-[#111] text-white font-semibold  mb- rounded px-4 py-2  w-full text-lg placeholder: text-base"
                  >Create Account</button>
                  </form>
-                 <p className="text-center">Already have an account? <Link to={"/captainlogin"}
+                 <p className="text-center">Already have an account? <Link to="/captainlogin"
                      className="text-blue-600"
                      >Login here</Link></p>
                  
