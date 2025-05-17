@@ -208,3 +208,35 @@ The endpoint returns a JSON payload with the following structure:
   "message": "Captain already exists"
 }
 ```
+
+# API Documentation - Ride Endpoints
+
+## GET /rides/get-fare
+
+**Description:**
+- **Endpoint:** `/rides/get-fare`
+- **Method:** GET
+- **Purpose:** Returns fare estimates for a ride based on the provided pickup and destination addresses.
+- **Authentication:** Requires a valid JWT token provided either in the `Authorization` header (formatted as `Bearer <token>`) or via a `token` cookie.
+
+**Query Parameters:**
+- `pickup` (string, required): The starting address for the ride. Must be at least 3 characters.
+- `destination` (string, required): The destination address for the ride. Must be at least 3 characters.
+
+**Response:**
+- **Success (HTTP 200):** Returns a JSON object that includes fare estimates for different vehicle types. For example:
+  ```json
+  {
+    "auto": 85,
+    "car": 130,
+    "moto": 55
+  }
+  ```
+- **Validation Error (HTTP 400):** Returns an errors array indicating missing or invalid parameters.
+- **Server Error (HTTP 500):** Returns an error message detailing the failure.
+
+**Example Request:**
+```plaintext
+GET /rides/get-fare?pickup=123%20Main%20St&destination=456%20Elm%20St
+Authorization: Bearer <token>
+```

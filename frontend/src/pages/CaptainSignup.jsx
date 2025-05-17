@@ -67,7 +67,7 @@ const CaptainSignup = () =>{
             setVehicleType('')
 
 
-        }
+ }
     return(
        <div className=" py-5 px-5 p-7 h-screen flex flex-col justify-between">
                  <div>
