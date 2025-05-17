@@ -11,9 +11,9 @@ const CaptainSignup = () =>{
     
         const [email, setEmail] = useState('')
         const [password, setPassword] = useState('')
-        const [firstName, setFirstName] = useState('')
-        const [lastName, setLastName] = useState('')
-        const [captainData, setCaptainData] = useState({})
+        const [firstname, setFirstName] = useState('')
+        const [lastname, setLastName] = useState('')
+        
 
 
         const [vehicleColor, setVehicleColor] = useState('')
@@ -28,10 +28,10 @@ const CaptainSignup = () =>{
     
         const submithandler = async(e)=>{
             e.preventDefault()
-            const CaptainData = {
+            const captainData = {
                 fullname:{
-                    firstname:firstName,
-                    lastname:lastName
+                    firstname:firstname,
+                    lastname:lastname
                 },
                 email: email,
                 password: password,
@@ -42,32 +42,26 @@ const CaptainSignup = () =>{
                     vehicleType:vehicleType
                 }
             }
-            console.log("Sending CaptainData:", JSON.stringify(CaptainData, null, 2));
-            const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/captains/register`, captainData)
-            console.log("Response:", response.data);
-            if(response.status === 201){
-                const data = response.data
-                setCaptain(data.Captain)
-                localStorage.setItem('token', data.token)
-                navigate('/captainhome')
-
-            } 
-           
-
-
-
-
-            setEmail('')
-            setFirstName('')
-            setLastName('')
-            setPassword('')
-            setVehicleColor('')
-            setVehiclePlate('')
-            setVehicleCapacity('')
-            setVehicleType('')
-
-
- }
+            try {
+                const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/captains/register`, captainData);
+                if (response.status === 201) {
+                    const data = response.data
+                    setCaptain(data.captain)
+                    localStorage.setItem('token', data.token)
+                    navigate('/captainhome')
+                }
+                setEmail('')
+                setFirstName('')
+                setLastName('')
+                setPassword('')
+                setVehicleColor('')
+                setVehiclePlate('')
+                setVehicleCapacity('')
+                setVehicleType('')
+            } catch (error) {
+                console.error("Error response:", error.response.data);
+            }
+        }
     return(
        <div className=" py-5 px-5 p-7 h-screen flex flex-col justify-between">
                  <div>
@@ -83,7 +77,7 @@ const CaptainSignup = () =>{
                       className="bg-[#eeeeee] w-1/2  rounded px-4 py-2 border  text-lg placeholder: text-base"
                       type="text" 
                       placeholder="Enter Firstname" 
-                      value={firstName}
+                      value={firstname}
                       onChange={(e)=>{
                          setFirstName(e.target.value)
                       }}
@@ -93,7 +87,7 @@ const CaptainSignup = () =>{
                       className="bg-[#eeeeee] w-1/2  rounded px-4 py-2 border  text-lg placeholder: text-base"
                       type="text" 
                       placeholder="Enter Lastname" 
-                      value={lastName}
+                      value={lastname}
                       onChange={(e)=>{
                          setLastName(e.target.value)
                       }}
@@ -167,7 +161,7 @@ const CaptainSignup = () =>{
                     </div>
      
                  <button
-                 className="bg-[#111] text-white font-semibold  mb- rounded px-4 py-2  w-full text-lg placeholder: text-base"
+                 className="bg-[#111] text-white font-semibold  mb- rounded px-4 py-2  w-full text-lg placeholder:text-base"
                  >Create Account</button>
                  </form>
                  <p className="text-center">Already have an account? <Link to="/captainlogin"

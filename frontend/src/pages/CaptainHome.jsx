@@ -5,6 +5,10 @@ import gsap from 'gsap'
 import CaptainDetail from '../components/CaptainDetail'
 import RidePopUp from '../components/RidePopUp'
 import ConfirmRidePopUp from "../components/ConfirmRidePopUp";
+import { SocketContext } from "../context/SocketContext";
+import { CaptainDataContext } from "../context/CaptainContext";
+import { useEffect, useContext } from "react";
+
 
 const CaptainHome = () => {
 
@@ -12,7 +16,64 @@ const CaptainHome = () => {
   const ridePopupPanelref = useRef(null)
   const [confirmRidePopupPanel, setConfirmRidePopupPanel] = useState(false)
   const confirmRidePopupPanelref = useRef(null)
+
+    const [ ride, setRide ] = useState(null)
+
+  const { socket } = useContext(SocketContext);
+  const { captain } = useContext(CaptainDataContext);
   
+   useEffect(() => {
+        socket.emit('join', {
+            userId: captain._id,
+            userType: 'captain'
+        })
+        const updateLocation = () => {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(position => {
+
+                 
+                    socket.emit('update-location-captain', {
+                        userId: captain._id,
+                        location: {
+                            ltd: position.coords.latitude,
+                            lng: position.coords.longitude
+                        }
+                    })
+                })
+            }
+        }
+
+        const locationInterval = setInterval(updateLocation, 10000)
+        updateLocation()
+
+        // return () => clearInterval(locationInterval)
+    }, [])
+
+    socket.on('new-ride', (data) => {
+
+        setRide(data)
+        setRidePopupPanel(true)
+
+    })
+     async function confirmRide() {
+
+        const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/rides/confirm`, {
+
+            rideId: ride._id,
+            captainId: captain._id,
+
+
+        }, {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem('token')}`
+            }
+        })
+
+        setRidePopupPanel(false)
+        setConfirmRidePopupPanel(true)
+
+    }
+      
 
 
   useGSAP(function(){
