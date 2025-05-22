@@ -1,72 +1,58 @@
 const mongoose = require('mongoose');
 
 
-
 const rideSchema = new mongoose.Schema({
-    user:{
+    user: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'user',
-        required: true,
+        required: true
     },
-
-    captain:{
+    captain: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'captain',
-        
     },
-
-    pickup:{
+    pickup: {
         type: String,
         required: true,
-        minlength: [3, "Pickup location must be at least 3 characters long"],
     },
-
-    destination:{
+    destination: {
         type: String,
         required: true,
-        minlength: [3, "Destination location must be at least 3 characters long"],
     },
-
-    fare:{
+    fare: {
         type: Number,
         required: true,
     },
 
-
-    status:{
+    status: {
         type: String,
-        enum: ['pending', 'accepted','ongoing', 'completed', 'cancelled'],
+        enum: [ 'pending', 'accepted', "ongoing", 'completed', 'cancelled' ],
         default: 'pending',
     },
 
     duration: {
         type: Number,
-        
-    },
+    }, // in seconds
 
     distance: {
         type: Number,
-    },
+    }, // in meters
 
-    paymentID:{
+    paymentID: {
         type: String,
     },
-
-    orderID: {
-        type: String,   
+    orderId: {
+        type: String,
     },
-
     signature: {
         type: String,
     },
 
-    otp:{
+    otp: {
         type: String,
-        selected: false,
+        select: false,
         required: true,
     },
-
-
 })
 
 module.exports = mongoose.model('ride', rideSchema);

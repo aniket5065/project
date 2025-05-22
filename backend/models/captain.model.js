@@ -63,20 +63,19 @@ const captainSchema = new mongoose.Schema({
         vehicleType: {
             type: String,
             required: true,
-            enum: ['car', 'motorcycle', 'auto'],
+            enum: ['car', 'moto', 'auto'],
         }
     },
 
     location: {
-        ltd:{
+        ltd: {
             type: Number,
-            
         },
-        lng:{
+        lng: {
             type: Number,
-           
         }
-    },
+    }
+
     
 })
 
@@ -92,6 +91,8 @@ captainSchema.methods.comparePassword = async function (password) {
 captainSchema.statics.hashPassword = async function (password) {
     return await bcrypt.hash(password, 10);
 }
+
+captainSchema.index({ location: '2dsphere' });
 
 const captainModel = mongoose.model('Captain', captainSchema);
 module.exports = captainModel;

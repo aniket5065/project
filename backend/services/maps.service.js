@@ -12,8 +12,8 @@ module.exports.getAddressCordinates = async (address) => {
         if (response.data.status === "OK") {
             const location = response.data.results[0].geometry.location;
             return {
-                lat: location.lat,
-                lng: location.lng,
+                lat: parseFloat(location.lat),
+                lng: parseFloat(location.lng)
             };
         } else {
             throw new Error("Unable to get coordinates for the address.");
@@ -75,14 +75,10 @@ module.exports.getAutoCompleteSuggestions = async (input) => {
 
 
 module.exports.getCaptainsInTheRadius = async (ltd, lng, radius) => {
-
-    // radius in km
-
-
     const captains = await captainModel.find({
         location: {
             $geoWithin: {
-                $centerSphere: [ [ ltd, lng ], radius / 6371 ]
+                $centerSphere: [ [ltd, lng] , radius / 6371 ]
             }
         }
     });
@@ -91,3 +87,4 @@ module.exports.getCaptainsInTheRadius = async (ltd, lng, radius) => {
 
 
 }
+
