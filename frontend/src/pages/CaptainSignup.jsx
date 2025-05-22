@@ -59,7 +59,11 @@ const CaptainSignup = () =>{
                 setVehicleCapacity('')
                 setVehicleType('')
             } catch (error) {
-                console.error("Error response:", error.response.data);
+                if (error.response) {
+                    console.error("Error response:", error.response.data);
+                } else {
+                    console.error("Error:", error.message);
+                }
             }
         }
     return(

@@ -45,6 +45,18 @@ const Home =() =>{
         socket.emit('join', {userType:'user', userId:user._id})
         
     }, [])
+
+    socket.on('ride-confirmed', ride => {
+
+        console.log(user)
+
+
+        setVehicleFound(false)
+        setWaitingForDriver(true)
+        setRide(ride)
+    })
+
+
   
     
      const handlePickupChange = async (e) => {
@@ -267,6 +279,7 @@ const Home =() =>{
                     destination={destination}
                     fare={fare}
                     vehicleType={vehicleType}
+                    
 
                     setConfirmRidePanel={setConfirmRidePanel} setVehicleFound={setVehicleFound} />
             </div>
