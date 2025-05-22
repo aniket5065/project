@@ -92,7 +92,7 @@ captainSchema.statics.hashPassword = async function (password) {
     return await bcrypt.hash(password, 10);
 }
 
-captainSchema.index({ location: '2dsphere' });
+
 
 const captainModel = mongoose.model('Captain', captainSchema);
 module.exports = captainModel;

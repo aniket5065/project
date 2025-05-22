@@ -3,23 +3,24 @@ const captainModel = require('../models/captain.model');
 
 
 
-module.exports.getAddressCordinates = async (address) => {
-
+module.exports.getAddressCoordinate = async (address) => {
     const apiKey = process.env.GOOGLE_MAP_API_KEY;
     const url = `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(address)}&key=${apiKey}`;
+
     try {
         const response = await axios.get(url);
-        if (response.data.status === "OK") {
-            const location = response.data.results[0].geometry.location;
+        if (response.data.status === 'OK') {
+            const location = response.data.results[ 0 ].geometry.location;
             return {
-                lat: parseFloat(location.lat),
-                lng: parseFloat(location.lng)
+                ltd: location.lat,
+                lng: location.lng
             };
         } else {
-            throw new Error("Unable to get coordinates for the address.");
+            throw new Error('Unable to fetch coordinates');
         }
     } catch (error) {
-        throw new Error("Error fetching coordinates: " + error.message);
+        console.error(error);
+        throw error;
     }
 }
 
@@ -73,12 +74,15 @@ module.exports.getAutoCompleteSuggestions = async (input) => {
     }
 }
 
-
 module.exports.getCaptainsInTheRadius = async (ltd, lng, radius) => {
+
+    // radius in km
+
+
     const captains = await captainModel.find({
         location: {
             $geoWithin: {
-                $centerSphere: [ [ltd, lng] , radius / 6371 ]
+                $centerSphere: [ [ ltd, lng ], radius / 6371 ]
             }
         }
     });

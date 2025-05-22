@@ -17,16 +17,13 @@ module.exports.createRide = async (req, res) => {
         const ride = await rideService.createRide({ user: req.user._id, pickup, destination, vehicleType });
         res.status(201).json(ride);
 
-        const pickupCordinates = await mapService.getAddressCordinates(pickup);
-        console.log(pickupCordinates);
+        const pickupCoordinates = await mapService.getAddressCoordinate(pickup);
+        console.log(pickupCoordinates);
 
 
 
-        const captainsInRadius = await mapService.getCaptainsInTheRadius(pickupCordinates.lng, pickupCordinates.lat,2);
+        const captainsInRadius = await mapService.getCaptainsInTheRadius(pickupCoordinates.ltd, pickupCoordinates.lng, 2);
         console.log(captainsInRadius);
-
-
-
 
         ride.otp = ""
 
