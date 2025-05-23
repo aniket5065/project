@@ -10,7 +10,7 @@ module.exports.getAddressCordinates = async (req, res, next) => {
 
   try {
     const { address } = req.query;
-    const coordinates = await mapsService.getAddressCordinates(address);
+    const coordinates = await mapsService.getAddressCoordinate(address);
     return res.status(200).json({
       status: true,
       message: "Coordinates fetched successfully",

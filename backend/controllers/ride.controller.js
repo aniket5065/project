@@ -18,32 +18,30 @@ module.exports.createRide = async (req, res) => {
         res.status(201).json(ride);
 
         const pickupCoordinates = await mapService.getAddressCoordinate(pickup);
-        console.log(pickupCoordinates);
+        console.log('Pickup Coordinates:', pickupCoordinates);
 
+        
+            
+        const captainsInRadius = await mapService.getCaptainsInTheRadius(pickupCoordinates.lng, pickupCoordinates.ltd, 10);
+        console.log('Captains in Radius:', captainsInRadius);
 
-
-        const captainsInRadius = await mapService.getCaptainsInTheRadius(pickupCoordinates.ltd, pickupCoordinates.lng, 2);
-        console.log(captainsInRadius);
-
-        ride.otp = ""
+        ride.otp = "";
 
         const rideWithUser = await rideModel.findOne({ _id: ride._id }).populate('user');
 
-        captainsInRadius.map(captain => {
+        captainsInRadius.forEach(captain => {
+            console.log(captain, rideWithUser)
+
 
             sendMessageToSocketId(captain.socketId, {
                 event: 'new-ride',
-                data: rideWithUser
-            })
-
-        })
-
+                data: rideWithUser,
+            });
+        });
     } catch (err) {
-
-        console.log(err);
+        console.error('Error in createRide:', err);
         return res.status(500).json({ message: err.message });
     }
-
 };
 
 module.exports.getFare = async (req, res) => {
