@@ -23,8 +23,10 @@ const CaptainHome = () => {
 
   const { socket } = useContext(SocketContext);
   const { captain } = useContext(CaptainDataContext);
+
   
    useEffect(() => {
+    
         socket.emit('join', {
             userId: captain._id,
             userType: 'captain'
@@ -38,8 +40,9 @@ const CaptainHome = () => {
                     socket.emit('update-location-captain', {
                         userId: captain._id,
                         location: {
-                            ltd: position.coords.latitude,
-                            lng: position.coords.longitude
+                            
+                            lng: position.coords.longitude,
+                            ltd: position.coords.latitude
                         }
                     })
                 })
